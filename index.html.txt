@@ -3,6 +3,7 @@ index.html
 <html>
 <head>
   <title>AliExpress Affiliate Site</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Welcome to My Affiliate Site</h1>
