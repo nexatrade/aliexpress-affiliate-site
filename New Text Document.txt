@@ -1,0 +1,11 @@
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AliExpress Affiliate Site</title>
+</head>
+<body>
+  <h1>Welcome to My Affiliate Site</h1>
+  <p>Products will appear here soon!</p>
+</body>
+</html>
