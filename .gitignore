@@ -1,24 +1,38 @@
-# Compiled class file
+# --- Java build files ---
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
-*.nar
 *.ear
+target/
+build/
+
+# --- JVM crash logs ---
+hs_err_pid*
+replay_pid*
+
+# --- Package archives ---
 *.zip
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# --- Logs ---
+*.log
+
+# --- Environment variables ---
+.env
+
+# --- Node.js dependencies (if you add JS later) ---
+node_modules/
+
+# --- Frontend build output ---
+dist/
+out/
+.cache/
+
+# --- Netlify build artifacts ---
+.netlify/
+
+# --- OS / Editor files ---
+.DS_Store
+Thumbs.db
+*.swp
