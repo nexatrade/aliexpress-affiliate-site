@@ -20,8 +20,10 @@ replay_pid*
 
 # --- Environment variables ---
 .env
+.env.local
+.env.*.local
 
-# --- Node.js dependencies (if you add JS later) ---
+# --- Node.js dependencies ---
 node_modules/
 
 # --- Frontend build output ---
@@ -31,8 +33,14 @@ out/
 
 # --- Netlify build artifacts ---
 .netlify/
+.netlify/functions/
 
-# --- OS / Editor files ---
+# --- IDE / Editor files ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS files ---
 .DS_Store
 Thumbs.db
-*.swp
+
