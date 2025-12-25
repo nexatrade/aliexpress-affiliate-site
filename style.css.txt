@@ -1,17 +1,20 @@
+/* General page styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  text-align: center;
+  background-color: #f9f9f9; /* light gray background */
+  text-align: center;        /* center all text */
   margin: 0;
   padding: 0;
 }
 
+/* Heading styling */
 h1 {
-  color: #e52e2e;
-  margin-top: 50px;
+  color: #e52e2e;            /* bright red text */
+  margin-top: 50px;          /* space above the heading */
 }
 
+/* Paragraph styling */
 p {
-  font-size: 18px;
-  color: #333;
+  font-size: 18px;           /* slightly larger text */
+  color: #333;               /* dark gray text */
 }
