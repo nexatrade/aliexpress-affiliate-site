@@ -1,5 +1,4 @@
 const crypto = require("crypto");
-const fetch = require("node-fetch");
 
 exports.handler = async (event) => {
   try {
@@ -15,7 +14,6 @@ exports.handler = async (event) => {
       };
     }
 
-    // AliExpress API parameters
     const params = {
       app_key: appKey,
       method: "aliexpress.affiliate.product.query",
@@ -26,7 +24,6 @@ exports.handler = async (event) => {
       keywords: keyword
     };
 
-    // Sort parameters alphabetically
     const sortedKeys = Object.keys(params).sort();
     let signString = appSecret;
 
@@ -36,12 +33,9 @@ exports.handler = async (event) => {
 
     signString += appSecret;
 
-    // MD5 signature
     const sign = crypto.createHash("md5").update(signString).digest("hex").toUpperCase();
 
-    // Build query string
     const query = new URLSearchParams({ ...params, sign }).toString();
-
     const url = `https://api.aliexpress.com/sync?${query}`;
 
     const response = await fetch(url);
