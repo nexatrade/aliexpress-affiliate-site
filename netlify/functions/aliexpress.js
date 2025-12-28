@@ -1,53 +1,62 @@
 const crypto = require("crypto");
+const fetch = require("node-fetch");
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   try {
-    const APP_KEY = process.env.ALI_APP_KEY;
-    const APP_SECRET = process.env.ALI_APP_SECRET;
+    const keyword = event.queryStringParameters.keyword || "tech";
 
-    const keyword =
-      (event.queryStringParameters && event.queryStringParameters.keyword) ||
-      "tech";
+    const appKey = process.env.ALI_APP_KEY;
+    const appSecret = process.env.ALI_APP_SECRET;
 
+    if (!appKey || !appSecret) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ error: "Missing AliExpress API credentials" })
+      };
+    }
+
+    // AliExpress API parameters
     const params = {
-      app_key: APP_KEY,
+      app_key: appKey,
       method: "aliexpress.affiliate.product.query",
-      timestamp: Date.now(),
-      sign_method: "sha256",
-      fields:
-        "product_title,product_main_image_url,product_detail_url,app_sale_price",
+      timestamp: new Date().toISOString().slice(0, 19).replace("T", " "),
+      sign_method: "md5",
+      format: "json",
+      v: "2.0",
       keywords: keyword
     };
 
-    const sorted = Object.keys(params)
-      .sort()
-      .map(k => `${k}${params[k]}`)
-      .join("");
+    // Sort parameters alphabetically
+    const sortedKeys = Object.keys(params).sort();
+    let signString = appSecret;
 
-    const sign = crypto
-      .createHash("sha256")
-      .update(APP_SECRET + sorted + APP_SECRET)
-      .digest("hex");
-
-    const body = new URLSearchParams({ ...params, sign });
-
-    const response = await fetch("https://api.aliexpress.com/sync", {
-      method: "POST",
-      body
+    sortedKeys.forEach((key) => {
+      signString += key + params[key];
     });
 
-    const text = await response.text();
+    signString += appSecret;
+
+    // MD5 signature
+    const sign = crypto.createHash("md5").update(signString).digest("hex").toUpperCase();
+
+    // Build query string
+    const query = new URLSearchParams({ ...params, sign }).toString();
+
+    const url = `https://api.aliexpress.com/sync?${query}`;
+
+    const response = await fetch(url);
+    const data = await response.json();
 
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: text
+      body: JSON.stringify(data)
     };
-  } catch (err) {
-    console.error(err);
+
+  } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Internal Server Error" })
+      body: JSON.stringify({ error: error.message })
     };
   }
 };
