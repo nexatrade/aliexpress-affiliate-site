@@ -36,7 +36,8 @@ exports.handler = async (event) => {
     const sign = crypto.createHash("md5").update(signString).digest("hex").toUpperCase();
 
     const query = new URLSearchParams({ ...params, sign }).toString();
-    const url = `https://api.aliexpress.com/sync?${query}`;
+    const url = `https://api.taobao.com/router/rest?${query}`;
+
 
     const response = await fetch(url);
     const data = await response.json();
